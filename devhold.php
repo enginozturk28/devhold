@@ -1,0 +1,382 @@
+<?php
+/**
+ * Plugin Name: DevHold - Maintenance Mode
+ * Plugin URI: https://enginozturk.tr
+ * Description: DevHold, WordPress sitenizi içerik oluşturma, düzenleme veya geliştirme sürecindeyken hızlıca bakım moduna almanızı sağlar.
+ * Version: 1.0.0
+ * Requires at least: 5.9
+ * Tested up to: 6.8.1
+ * Requires PHP: 7.4
+ * Author: Engin ÖZTÜRK & Claude AI
+ * Author URI: https://enginozturk.tr
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: devhold
+ * Domain Path: /languages
+ */
+
+// Direkt erişimi engelle
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+// Eklenti sabitleri
+define( 'DEVHOLD_VERSION', '1.0.0' );
+define( 'DEVHOLD_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'DEVHOLD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+/**
+ * Eklenti aktivasyon hook'u
+ */
+function devhold_activation() {
+    // Varsayılan ayarları ekle
+    $default_options = array(
+        'enabled' => false,
+        'title' => __( 'Geliştirme Aşamasında', 'devhold' ),
+        'message' => __( 'Sitemiz şu anda geliştirme aşamasındadır. Lütfen daha sonra tekrar ziyaret ediniz.', 'devhold' ),
+        'countdown_enabled' => false,
+        'countdown_date' => '',
+        'social_links' => array(),
+        'custom_css' => '',
+        'logo_url' => '',
+        'background_color' => '#667eea',
+        'text_color' => '#ffffff',
+        'bypass_roles' => array( 'administrator' ),
+        'design_style' => 'minimal',
+        'background_image' => '',
+        'subtitle' => __( 'Geliştirme Aşamasında', 'devhold' )
+    );
+    
+    if ( false === get_option( 'devhold_options' ) ) {
+        add_option( 'devhold_options', $default_options );
+    }
+}
+register_activation_hook( __FILE__, 'devhold_activation' );
+
+/**
+ * Eklenti deaktivasyon hook'u
+ */
+function devhold_deactivation() {
+    // Gerekirse temizlik işlemleri yapılabilir
+}
+register_deactivation_hook( __FILE__, 'devhold_deactivation' );
+
+/**
+ * Ana eklenti sınıfı
+ */
+class DevHold {
+    
+    /**
+     * Singleton instance
+     */
+    private static $instance = null;
+    
+    /**
+     * Eklenti ayarları
+     */
+    private $options;
+    
+    /**
+     * Singleton instance'ı döndür
+     */
+    public static function get_instance() {
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
+    /**
+     * Constructor
+     */
+    private function __construct() {
+        // Varsayılan değerler
+        $default_options = array(
+            'enabled' => false,
+            'title' => __( 'Geliştirme Aşamasında', 'devhold' ),
+            'message' => __( 'Sitemiz şu anda geliştirme aşamasındadır. Lütfen daha sonra tekrar ziyaret ediniz.', 'devhold' ),
+            'countdown_enabled' => false,
+            'countdown_date' => '',
+            'social_links' => array(),
+            'custom_css' => '',
+            'logo_url' => '',
+            'background_color' => '#667eea',
+            'text_color' => '#ffffff',
+            'bypass_roles' => array( 'administrator' ),
+            'design_style' => 'minimal',
+            'background_image' => '',
+            'subtitle' => __( 'Geliştirme Aşamasında', 'devhold' )
+        );
+        
+        $this->options = get_option( 'devhold_options', array() );
+        $this->options = wp_parse_args( $this->options, $default_options );
+        
+        // Hook'ları ekle
+        add_action( 'init', array( $this, 'init' ) );
+        add_action( 'template_redirect', array( $this, 'check_maintenance_mode' ) );
+        
+        // Admin için
+        if ( is_admin() ) {
+            add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
+            add_action( 'admin_init', array( $this, 'register_settings' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+            add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), 100 );
+        }
+        
+        // AJAX işlemleri
+        add_action( 'wp_ajax_devhold_toggle_status', array( $this, 'ajax_toggle_status' ) );
+    }
+    
+    /**
+     * Plugin initialization
+     */
+    public function init() {
+        // Dil dosyalarını yükle
+        load_plugin_textdomain( 'devhold', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    }
+    
+    /**
+     * Bakım modunu kontrol et
+     */
+    public function check_maintenance_mode() {
+        // Admin panelinde değilse ve bakım modu aktifse
+        if ( ! is_admin() && ! empty( $this->options['enabled'] ) ) {
+            
+            // Bypass kontrolü
+            if ( $this->user_can_bypass() ) {
+                return;
+            }
+            
+            // Login sayfası kontrolü
+            if ( $this->is_login_page() ) {
+                return;
+            }
+            
+            // Bakım sayfasını göster
+            $this->show_maintenance_page();
+        }
+    }
+    
+    /**
+     * Kullanıcının bakım modunu atlayıp atlayamayacağını kontrol et
+     */
+    private function user_can_bypass() {
+        if ( ! is_user_logged_in() ) {
+            return false;
+        }
+        
+        $user = wp_get_current_user();
+        $bypass_roles = ! empty( $this->options['bypass_roles'] ) ? $this->options['bypass_roles'] : array( 'administrator' );
+        
+        foreach ( $bypass_roles as $role ) {
+            if ( in_array( $role, $user->roles ) ) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Login sayfası kontrolü
+     */
+    private function is_login_page() {
+        return in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) );
+    }
+    
+    /**
+     * Bakım sayfasını göster
+     */
+    private function show_maintenance_page() {
+        // HTTP durum kodu
+        header( 'HTTP/1.1 503 Service Temporarily Unavailable' );
+        header( 'Status: 503 Service Temporarily Unavailable' );
+        header( 'Retry-After: 3600' );
+        
+        // Template dosyasını yükle
+        include DEVHOLD_PLUGIN_DIR . 'templates/maintenance.php';
+        exit();
+    }
+    
+    /**
+     * Admin menüsünü ekle
+     */
+    public function add_admin_menu() {
+        add_menu_page(
+            __( 'DevHold Ayarları', 'devhold' ),
+            __( 'DevHold', 'devhold' ),
+            'manage_options',
+            'devhold',
+            array( $this, 'admin_page' ),
+            'dashicons-hammer',
+            80
+        );
+    }
+    
+    /**
+     * Admin sayfası
+     */
+    public function admin_page() {
+        include DEVHOLD_PLUGIN_DIR . 'admin/settings-page.php';
+    }
+    
+    /**
+     * Ayarları kaydet
+     */
+    public function register_settings() {
+        register_setting( 'devhold_settings', 'devhold_options', array( $this, 'sanitize_options' ) );
+    }
+    
+    /**
+     * Ayarları temizle ve doğrula
+     */
+    public function sanitize_options( $input ) {
+        $sanitized = array();
+        
+        // Boolean değerler
+        $sanitized['enabled'] = ! empty( $input['enabled'] );
+        $sanitized['countdown_enabled'] = ! empty( $input['countdown_enabled'] );
+        
+        // Text değerler
+        $sanitized['title'] = isset( $input['title'] ) ? sanitize_text_field( $input['title'] ) : '';
+        $sanitized['message'] = isset( $input['message'] ) ? wp_kses_post( $input['message'] ) : '';
+        $sanitized['countdown_date'] = isset( $input['countdown_date'] ) ? sanitize_text_field( $input['countdown_date'] ) : '';
+        $sanitized['custom_css'] = isset( $input['custom_css'] ) ? sanitize_textarea_field( $input['custom_css'] ) : '';
+        $sanitized['logo_url'] = isset( $input['logo_url'] ) ? esc_url_raw( $input['logo_url'] ) : '';
+        $sanitized['subtitle'] = isset( $input['subtitle'] ) ? sanitize_text_field( $input['subtitle'] ) : '';
+        $sanitized['background_image'] = isset( $input['background_image'] ) ? esc_url_raw( $input['background_image'] ) : '';
+        $sanitized['design_style'] = isset( $input['design_style'] ) && in_array( $input['design_style'], array( 'minimal', 'detailed' ) ) ? $input['design_style'] : 'minimal';
+        
+        // Renkler
+        $sanitized['background_color'] = isset( $input['background_color'] ) ? sanitize_hex_color( $input['background_color'] ) : '#667eea';
+        $sanitized['text_color'] = isset( $input['text_color'] ) ? sanitize_hex_color( $input['text_color'] ) : '#ffffff';
+        
+        // Roller
+        $sanitized['bypass_roles'] = ! empty( $input['bypass_roles'] ) ? array_map( 'sanitize_text_field', $input['bypass_roles'] ) : array();
+        
+        // Sosyal linkler
+        if ( ! empty( $input['social_links'] ) && is_array( $input['social_links'] ) ) {
+            foreach ( $input['social_links'] as $key => $link ) {
+                if ( ! empty( $link['url'] ) ) {
+                    $sanitized['social_links'][] = array(
+                        'platform' => sanitize_text_field( $link['platform'] ),
+                        'url' => esc_url_raw( $link['url'] )
+                    );
+                }
+            }
+        }
+        
+        return $sanitized;
+    }
+    
+    /**
+     * Admin scriptlerini yükle
+     */
+    public function enqueue_admin_scripts( $hook ) {
+        if ( 'toplevel_page_devhold' !== $hook ) {
+            return;
+        }
+        
+        wp_enqueue_media();
+        wp_enqueue_style( 'wp-color-picker' );
+        wp_enqueue_script( 'wp-color-picker' );
+        
+        wp_enqueue_style( 
+            'devhold-admin', 
+            DEVHOLD_PLUGIN_URL . 'assets/css/admin.css', 
+            array(), 
+            DEVHOLD_VERSION 
+        );
+        
+        wp_enqueue_script( 
+            'devhold-admin', 
+            DEVHOLD_PLUGIN_URL . 'assets/js/admin.js', 
+            array( 'jquery', 'wp-color-picker' ), 
+            DEVHOLD_VERSION, 
+            true 
+        );
+        
+        wp_localize_script( 'devhold-admin', 'devhold', array(
+            'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'nonce' => wp_create_nonce( 'devhold_nonce' )
+        ) );
+    }
+    
+    /**
+     * Admin bar menüsü ekle
+     */
+    public function add_admin_bar_menu( $wp_admin_bar ) {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            return;
+        }
+        
+        $status = ! empty( $this->options['enabled'] ) ? 'active' : 'inactive';
+        $status_text = ! empty( $this->options['enabled'] ) ? __( 'Aktif', 'devhold' ) : __( 'Pasif', 'devhold' );
+        
+        $wp_admin_bar->add_node( array(
+            'id' => 'devhold-status',
+            'title' => '<span class="ab-icon"></span><span class="ab-label">DevHold: ' . $status_text . '</span>',
+            'href' => admin_url( 'admin.php?page=devhold' ),
+            'meta' => array(
+                'class' => 'devhold-admin-bar-' . $status,
+                'title' => __( 'DevHold Bakım Modu', 'devhold' )
+            )
+        ) );
+        
+        // Hızlı değiştir butonu
+        $wp_admin_bar->add_node( array(
+            'id' => 'devhold-toggle',
+            'parent' => 'devhold-status',
+            'title' => ! empty( $this->options['enabled'] ) ? __( 'Devre Dışı Bırak', 'devhold' ) : __( 'Etkinleştir', 'devhold' ),
+            'href' => '#',
+            'meta' => array(
+                'onclick' => 'devholdToggleStatus(); return false;'
+            )
+        ) );
+    }
+    
+    /**
+     * AJAX ile durumu değiştir
+     */
+    public function ajax_toggle_status() {
+        if ( ! check_ajax_referer( 'devhold_nonce', 'nonce', false ) ) {
+            wp_die( 'Güvenlik kontrolü başarısız!' );
+        }
+        
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( 'Yetkiniz yok!' );
+        }
+        
+        // Options'ı yeniden yükle
+        $default_options = array(
+            'enabled' => false,
+            'title' => __( 'Geliştirme Aşamasında', 'devhold' ),
+            'message' => __( 'Sitemiz şu anda geliştirme aşamasındadır. Lütfen daha sonra tekrar ziyaret ediniz.', 'devhold' ),
+            'countdown_enabled' => false,
+            'countdown_date' => '',
+            'social_links' => array(),
+            'custom_css' => '',
+            'logo_url' => '',
+            'background_color' => '#667eea',
+            'text_color' => '#ffffff',
+            'bypass_roles' => array( 'administrator' ),
+            'design_style' => 'minimal',
+            'background_image' => '',
+            'subtitle' => __( 'Geliştirme Aşamasında', 'devhold' )
+        );
+        
+        $this->options = get_option( 'devhold_options', array() );
+        $this->options = wp_parse_args( $this->options, $default_options );
+        
+        $this->options['enabled'] = ! $this->options['enabled'];
+        update_option( 'devhold_options', $this->options );
+        
+        wp_send_json_success( array(
+            'enabled' => $this->options['enabled'],
+            'message' => $this->options['enabled'] ? __( 'Bakım modu etkinleştirildi.', 'devhold' ) : __( 'Bakım modu devre dışı bırakıldı.', 'devhold' )
+        ) );
+    }
+}
+
+// Eklentiyi başlat
+DevHold::get_instance();
