@@ -130,3 +130,16 @@ Bu eklenti GPL v2 veya sonraki sürümleri altında lisanslanmıştır. Özgürc
 ---
 
 💙 WordPress topluluğu için sevgiyle geliştirildi.
+
+## 🌍 Dil Desteği
+
+DevHold tamamen çeviri destekli gelir ve şunları içerir:
+
+- **İngilizce** - Varsayılan dil
+- **Türkçe** - Tam çeviri dahil
+- **Çeviri Desteği** - Özel çeviriler için POT dosyası dahil
+
+Eklenti, WordPress dil ayarınızı otomatik olarak algılar ve uygun çeviriyi gösterir.
+
+### Dokümantasyon
+- [English](README.md)

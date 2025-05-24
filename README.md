@@ -131,6 +131,15 @@ This plugin is licensed under GPL v2 or later. You can freely use, modify, and d
 
 💙 Built with love for the WordPress community.
 
-## 🌍 Translations
+## 🌍 Language Support
 
+DevHold is fully translation-ready and includes:
+
+- **English** - Default language
+- **Turkish (Türkçe)** - Full translation included
+- **Translation Ready** - POT file included for custom translations
+
+The plugin automatically detects your WordPress language setting and displays the appropriate translation.
+
+### Documentation
 - [Türkçe (Turkish)](README-TR.md)

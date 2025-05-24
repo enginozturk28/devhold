@@ -1,0 +1,222 @@
+# Turkish (Türkçe) translation for DevHold
+# Copyright (C) 2024 Engin ÖZTÜRK & Claude AI
+msgid ""
+msgstr ""
+"Project-Id-Version: DevHold 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/devhold\n"
+"POT-Creation-Date: 2024-01-01T00:00:00+00:00\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: Engin ÖZTÜRK\n"
+"Language-Team: Turkish\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
+
+#. Plugin Name
+msgid "DevHold - Maintenance Mode"
+msgstr "DevHold - Bakım Modu"
+
+#. Description
+msgid "DevHold allows you to quickly put your WordPress site into maintenance mode while creating content, editing, or during development."
+msgstr "DevHold, WordPress sitenizi içerik oluşturma, düzenleme veya geliştirme sürecindeyken hızlıca bakım moduna almanızı sağlar."
+
+msgid "Under Development"
+msgstr "Geliştirme Aşamasında"
+
+msgid "Our site is currently under development. Please visit again later."
+msgstr "Sitemiz şu anda geliştirme aşamasındadır. Lütfen daha sonra tekrar ziyaret ediniz."
+
+msgid "DevHold Settings"
+msgstr "DevHold Ayarları"
+
+msgid "DevHold"
+msgstr "DevHold"
+
+msgid "Active"
+msgstr "Aktif"
+
+msgid "Inactive"
+msgstr "Pasif"
+
+msgid "Disable"
+msgstr "Devre Dışı Bırak"
+
+msgid "Enable"
+msgstr "Etkinleştir"
+
+msgid "DevHold Maintenance Mode"
+msgstr "DevHold Bakım Modu"
+
+msgid "Maintenance mode enabled."
+msgstr "Bakım modu etkinleştirildi."
+
+msgid "Maintenance mode disabled."
+msgstr "Bakım modu devre dışı bırakıldı."
+
+msgid "DevHold Maintenance Mode Settings"
+msgstr "DevHold Bakım Modu Ayarları"
+
+msgid "Settings saved successfully."
+msgstr "Ayarlar başarıyla kaydedildi."
+
+msgid "Maintenance Mode Status:"
+msgstr "Bakım Modu Durumu:"
+
+msgid "General"
+msgstr "Genel"
+
+msgid "Design"
+msgstr "Tasarım"
+
+msgid "Countdown"
+msgstr "Geri Sayım"
+
+msgid "Social Media"
+msgstr "Sosyal Medya"
+
+msgid "Access Control"
+msgstr "Erişim Kontrolü"
+
+msgid "General Settings"
+msgstr "Genel Ayarlar"
+
+msgid "Maintenance Mode"
+msgstr "Bakım Modu"
+
+msgid "Enable or disable maintenance mode."
+msgstr "Bakım modunu etkinleştir veya devre dışı bırak."
+
+msgid "Title"
+msgstr "Başlık"
+
+msgid "Page Title (SEO) - Site name will not be added."
+msgstr "Page Title (SEO) - Site adı eklenmez."
+
+msgid "Subtitle"
+msgstr "Alt Başlık"
+
+msgid "Main heading displayed on the page."
+msgstr "Sayfada gösterilecek ana başlık."
+
+msgid "Message"
+msgstr "Mesaj"
+
+msgid "Description message shown to visitors."
+msgstr "Ziyaretçilere gösterilecek açıklama mesajı."
+
+msgid "Design Settings"
+msgstr "Tasarım Ayarları"
+
+msgid "Design Style"
+msgstr "Tasarım Stili"
+
+msgid "Minimal"
+msgstr "Minimal"
+
+msgid "Extended"
+msgstr "Genişletilmiş"
+
+msgid "Select design style for maintenance page."
+msgstr "Bakım sayfası için tasarım stilini seçin."
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Select Logo"
+msgstr "Logo Seç"
+
+msgid "Remove"
+msgstr "Kaldır"
+
+msgid "Logo displayed on maintenance page. Default icon will be shown if empty."
+msgstr "Bakım sayfasında gösterilecek logo. Boş bırakılırsa varsayılan ikon gösterilir."
+
+msgid "Background Color"
+msgstr "Arka Plan Rengi"
+
+msgid "Starting color for gradient background."
+msgstr "Gradient arka plan için başlangıç rengi."
+
+msgid "Text Color"
+msgstr "Metin Rengi"
+
+msgid "Heading and text color."
+msgstr "Başlık ve metin rengi."
+
+msgid "Background Image"
+msgstr "Arka Plan Görseli"
+
+msgid "Select Background"
+msgstr "Arka Plan Seç"
+
+msgid "Select background image. Gradient background will be used if empty."
+msgstr "Arka plan için görsel seçin. Boş bırakılırsa gradient arka plan kullanılır."
+
+msgid "Custom CSS"
+msgstr "Özel CSS"
+
+msgid "Custom CSS code to add to the maintenance page."
+msgstr "Bakım sayfasına eklemek istediğiniz özel CSS kodları."
+
+msgid "Countdown Settings"
+msgstr "Geri Sayım Ayarları"
+
+msgid "Show countdown timer."
+msgstr "Geri sayım sayacını göster."
+
+msgid "End Date"
+msgstr "Bitiş Tarihi"
+
+msgid "Date and time when countdown ends."
+msgstr "Geri sayımın biteceği tarih ve saat."
+
+msgid "Social Media Links"
+msgstr "Sosyal Medya Linkleri"
+
+msgid "Select Platform"
+msgstr "Platform Seçin"
+
+msgid "Add Social Media"
+msgstr "Sosyal Medya Ekle"
+
+msgid "Roles That Can Bypass Maintenance Mode"
+msgstr "Bakım Modunu Atlayabilecek Roller"
+
+msgid "Users with selected roles can access the site without seeing maintenance mode."
+msgstr "Seçilen rollere sahip kullanıcılar bakım modunu görmeden siteye erişebilir."
+
+msgid "Developer:"
+msgstr "Geliştirici:"
+
+msgid "Days"
+msgstr "Gün"
+
+msgid "Hours"
+msgstr "Saat"
+
+msgid "Minutes"
+msgstr "Dakika"
+
+msgid "Seconds"
+msgstr "Saniye"
+
+msgid "Time expired!"
+msgstr "Süre doldu!"
+
+msgid "Security check failed!"
+msgstr "Güvenlik kontrolü başarısız!"
+
+msgid "You don't have permission!"
+msgstr "Yetkiniz yok!"
+
+msgid "An error occurred. Please try again."
+msgstr "Bir hata oluştu. Lütfen tekrar deneyin."
+
+msgid "Connection error. Please try again."
+msgstr "Bağlantı hatası. Lütfen tekrar deneyin."
+
+msgid "URL"
+msgstr "URL"

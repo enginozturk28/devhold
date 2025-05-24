@@ -1,0 +1,284 @@
+# Copyright (C) 2024 Engin ÖZTÜRK & Claude AI
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: DevHold 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/devhold\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-01-01T00:00:00+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Domain: devhold\n"
+
+#. Plugin Name of the plugin
+msgid "DevHold - Maintenance Mode"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://enginozturk.tr"
+msgstr ""
+
+#. Description of the plugin
+msgid "DevHold, WordPress sitenizi içerik oluşturma, düzenleme veya geliştirme sürecindeyken hızlıca bakım moduna almanızı sağlar."
+msgstr ""
+
+#. Author of the plugin
+msgid "Engin ÖZTÜRK & Claude AI"
+msgstr ""
+
+#: devhold.php:32 devhold.php:94 devhold.php:353
+msgid "Geliştirme Aşamasında"
+msgstr ""
+
+#: devhold.php:33 devhold.php:95 devhold.php:354
+msgid "Sitemiz şu anda geliştirme aşamasındadır. Lütfen daha sonra tekrar ziyaret ediniz."
+msgstr ""
+
+#: devhold.php:200
+msgid "DevHold Ayarları"
+msgstr ""
+
+#: devhold.php:201
+msgid "DevHold"
+msgstr ""
+
+#: devhold.php:318
+msgid "Aktif"
+msgstr ""
+
+#: devhold.php:318
+msgid "Pasif"
+msgstr ""
+
+#: devhold.php:331
+msgid "Devre Dışı Bırak"
+msgstr ""
+
+#: devhold.php:331
+msgid "Etkinleştir"
+msgstr ""
+
+#: devhold.php:335
+msgid "DevHold Bakım Modu"
+msgstr ""
+
+#: devhold.php:377
+msgid "Bakım modu etkinleştirildi."
+msgstr ""
+
+#: devhold.php:377
+msgid "Bakım modu devre dışı bırakıldı."
+msgstr ""
+
+#: admin/settings-page.php:44
+msgid "DevHold Bakım Modu Ayarları"
+msgstr ""
+
+#: admin/settings-page.php:48
+msgid "Ayarlar başarıyla kaydedildi."
+msgstr ""
+
+#: admin/settings-page.php:54
+msgid "Bakım Modu Durumu:"
+msgstr ""
+
+#: admin/settings-page.php:66
+msgid "Genel"
+msgstr ""
+
+#: admin/settings-page.php:67
+msgid "Tasarım"
+msgstr ""
+
+#: admin/settings-page.php:68
+msgid "Geri Sayım"
+msgstr ""
+
+#: admin/settings-page.php:69
+msgid "Sosyal Medya"
+msgstr ""
+
+#: admin/settings-page.php:70
+msgid "Erişim Kontrolü"
+msgstr ""
+
+#: admin/settings-page.php:75
+msgid "Genel Ayarlar"
+msgstr ""
+
+#: admin/settings-page.php:80
+msgid "Bakım Modu"
+msgstr ""
+
+#: admin/settings-page.php:87
+msgid "Bakım modunu etkinleştir veya devre dışı bırak."
+msgstr ""
+
+#: admin/settings-page.php:93
+msgid "Başlık"
+msgstr ""
+
+#: admin/settings-page.php:97
+msgid "Page Title (SEO) - Site adı eklenmez."
+msgstr ""
+
+#: admin/settings-page.php:103
+msgid "Alt Başlık"
+msgstr ""
+
+#: admin/settings-page.php:107
+msgid "Sayfada gösterilecek ana başlık."
+msgstr ""
+
+#: admin/settings-page.php:113
+msgid "Mesaj"
+msgstr ""
+
+#: admin/settings-page.php:127
+msgid "Ziyaretçilere gösterilecek açıklama mesajı."
+msgstr ""
+
+#: admin/settings-page.php:135
+msgid "Tasarım Ayarları"
+msgstr ""
+
+#: admin/settings-page.php:140
+msgid "Tasarım Stili"
+msgstr ""
+
+#: admin/settings-page.php:152
+msgid "Minimal"
+msgstr ""
+
+#: admin/settings-page.php:164
+msgid "Genişletilmiş"
+msgstr ""
+
+#: admin/settings-page.php:167
+msgid "Bakım sayfası için tasarım stilini seçin."
+msgstr ""
+
+#: admin/settings-page.php:173
+msgid "Logo"
+msgstr ""
+
+#: admin/settings-page.php:185
+msgid "Logo Seç"
+msgstr ""
+
+#: admin/settings-page.php:188
+msgid "Kaldır"
+msgstr ""
+
+#: admin/settings-page.php:191
+msgid "Bakım sayfasında gösterilecek logo. Boş bırakılırsa varsayılan ikon gösterilir."
+msgstr ""
+
+#: admin/settings-page.php:197
+msgid "Arka Plan Rengi"
+msgstr ""
+
+#: admin/settings-page.php:201
+msgid "Gradient arka plan için başlangıç rengi."
+msgstr ""
+
+#: admin/settings-page.php:207
+msgid "Metin Rengi"
+msgstr ""
+
+#: admin/settings-page.php:211
+msgid "Başlık ve metin rengi."
+msgstr ""
+
+#: admin/settings-page.php:217
+msgid "Arka Plan Görseli"
+msgstr ""
+
+#: admin/settings-page.php:229
+msgid "Arka Plan Seç"
+msgstr ""
+
+#: admin/settings-page.php:235
+msgid "Arka plan için görsel seçin. Boş bırakılırsa gradient arka plan kullanılır."
+msgstr ""
+
+#: admin/settings-page.php:241
+msgid "Özel CSS"
+msgstr ""
+
+#: admin/settings-page.php:245
+msgid "Bakım sayfasına eklemek istediğiniz özel CSS kodları."
+msgstr ""
+
+#: admin/settings-page.php:253
+msgid "Geri Sayım Ayarları"
+msgstr ""
+
+#: admin/settings-page.php:258
+msgid "Geri Sayım"
+msgstr ""
+
+#: admin/settings-page.php:265
+msgid "Geri sayım sayacını göster."
+msgstr ""
+
+#: admin/settings-page.php:271
+msgid "Bitiş Tarihi"
+msgstr ""
+
+#: admin/settings-page.php:275
+msgid "Geri sayımın biteceği tarih ve saat."
+msgstr ""
+
+#: admin/settings-page.php:283
+msgid "Sosyal Medya Linkleri"
+msgstr ""
+
+#: admin/settings-page.php:293
+msgid "Platform Seçin"
+msgstr ""
+
+#: admin/settings-page.php:310
+msgid "Sosyal Medya Ekle"
+msgstr ""
+
+#: admin/settings-page.php:318
+msgid "Erişim Kontrolü"
+msgstr ""
+
+#: admin/settings-page.php:323
+msgid "Bakım Modunu Atlayabilecek Roller"
+msgstr ""
+
+#: admin/settings-page.php:335
+msgid "Seçilen rollere sahip kullanıcılar bakım modunu görmeden siteye erişebilir."
+msgstr ""
+
+#: admin/settings-page.php:346
+msgid "Geliştirici:"
+msgstr ""
+
+#: templates/maintenance.php:384
+msgid "Gün"
+msgstr ""
+
+#: templates/maintenance.php:388
+msgid "Saat"
+msgstr ""
+
+#: templates/maintenance.php:392
+msgid "Dakika"
+msgstr ""
+
+#: templates/maintenance.php:396
+msgid "Saniye"
+msgstr ""
+
+#: templates/maintenance.php:439
+msgid "Süre doldu!"
+msgstr ""

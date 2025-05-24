@@ -5,19 +5,19 @@
  * @package DevHold
  */
 
-// Güvenlik kontrolü
+// Security check
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// Mevcut ayarları al
+// Get current settings
 $options = get_option( 'devhold_options' );
 
-// Varsayılan değerleri ekle (eğer yoksa)
+// Add default values (if not exists)
 $default_options = array(
     'enabled' => false,
-    'title' => __( 'Geliştirme Aşamasında', 'devhold' ),
-    'message' => __( 'Sitemiz şu anda geliştirme aşamasındadır. Lütfen daha sonra tekrar ziyaret ediniz.', 'devhold' ),
+    'title' => __( 'Under Development', 'devhold' ),
+    'message' => __( 'Our site is currently under development. Please visit again later.', 'devhold' ),
     'countdown_enabled' => false,
     'countdown_date' => '',
     'social_links' => array(),
@@ -28,35 +28,35 @@ $default_options = array(
     'bypass_roles' => array( 'administrator' ),
     'design_style' => 'minimal',
     'background_image' => '',
-    'subtitle' => __( 'Geliştirme Aşamasında', 'devhold' )
+    'subtitle' => __( 'Under Development', 'devhold' )
 );
 
-// Eksik değerleri varsayılanlarla doldur
+// Fill missing values with defaults
 $options = wp_parse_args( $options, $default_options );
 
-// WordPress rolleri
+// WordPress roles
 $wp_roles = wp_roles();
 $roles = $wp_roles->get_names();
 ?>
 
 <div class="wrap">
-    <h1><?php esc_html_e( 'DevHold Bakım Modu Ayarları', 'devhold' ); ?></h1>
+    <h1><?php esc_html_e( 'DevHold Maintenance Mode Settings', 'devhold' ); ?></h1>
     
     <?php if ( isset( $_GET['settings-updated'] ) ) : ?>
         <div class="notice notice-success is-dismissible">
-            <p><?php esc_html_e( 'Ayarlar başarıyla kaydedildi.', 'devhold' ); ?></p>
+            <p><?php esc_html_e( 'Settings saved successfully.', 'devhold' ); ?></p>
         </div>
     <?php endif; ?>
     
     <div class="devhold-status-bar">
         <h2>
-            <?php esc_html_e( 'Bakım Modu Durumu:', 'devhold' ); ?>
+            <?php esc_html_e( 'Maintenance Mode Status:', 'devhold' ); ?>
             <span class="devhold-status <?php echo ! empty( $options['enabled'] ) ? 'active' : 'inactive'; ?>">
-                <?php echo ! empty( $options['enabled'] ) ? esc_html__( 'Aktif', 'devhold' ) : esc_html__( 'Pasif', 'devhold' ); ?>
+                <?php echo ! empty( $options['enabled'] ) ? esc_html__( 'Active', 'devhold' ) : esc_html__( 'Inactive', 'devhold' ); ?>
             </span>
         </h2>
         <button type="button" class="button button-primary devhold-toggle-button" id="devhold-quick-toggle">
-            <?php echo ! empty( $options['enabled'] ) ? esc_html__( 'Devre Dışı Bırak', 'devhold' ) : esc_html__( 'Etkinleştir', 'devhold' ); ?>
+            <?php echo ! empty( $options['enabled'] ) ? esc_html__( 'Disable', 'devhold' ) : esc_html__( 'Enable', 'devhold' ); ?>
         </button>
     </div>
     
@@ -65,54 +65,54 @@ $roles = $wp_roles->get_names();
         
         <div class="devhold-tabs">
             <ul class="devhold-tab-nav">
-                <li><a href="#general" class="active"><?php esc_html_e( 'Genel', 'devhold' ); ?></a></li>
-                <li><a href="#design"><?php esc_html_e( 'Tasarım', 'devhold' ); ?></a></li>
-                <li><a href="#countdown"><?php esc_html_e( 'Geri Sayım', 'devhold' ); ?></a></li>
-                <li><a href="#social"><?php esc_html_e( 'Sosyal Medya', 'devhold' ); ?></a></li>
-                <li><a href="#access"><?php esc_html_e( 'Erişim Kontrolü', 'devhold' ); ?></a></li>
+                <li><a href="#general" class="active"><?php esc_html_e( 'General', 'devhold' ); ?></a></li>
+                <li><a href="#design"><?php esc_html_e( 'Design', 'devhold' ); ?></a></li>
+                <li><a href="#countdown"><?php esc_html_e( 'Countdown', 'devhold' ); ?></a></li>
+                <li><a href="#social"><?php esc_html_e( 'Social Media', 'devhold' ); ?></a></li>
+                <li><a href="#access"><?php esc_html_e( 'Access Control', 'devhold' ); ?></a></li>
             </ul>
             
-            <!-- Genel Ayarlar -->
+            <!-- General Settings -->
             <div id="general" class="devhold-tab-content active">
-                <h3><?php esc_html_e( 'Genel Ayarlar', 'devhold' ); ?></h3>
+                <h3><?php esc_html_e( 'General Settings', 'devhold' ); ?></h3>
                 
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="devhold_enabled"><?php esc_html_e( 'Bakım Modu', 'devhold' ); ?></label>
+                            <label for="devhold_enabled"><?php esc_html_e( 'Maintenance Mode', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <label class="devhold-switch">
                                 <input type="checkbox" name="devhold_options[enabled]" id="devhold_enabled" value="1" <?php checked( ! empty( $options['enabled'] ) ); ?>>
                                 <span class="devhold-slider"></span>
                             </label>
-                            <p class="description"><?php esc_html_e( 'Bakım modunu etkinleştir veya devre dışı bırak.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Enable or disable maintenance mode.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <label for="devhold_title"><?php esc_html_e( 'Başlık', 'devhold' ); ?></label>
+                            <label for="devhold_title"><?php esc_html_e( 'Title', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <input type="text" name="devhold_options[title]" id="devhold_title" value="<?php echo esc_attr( $options['title'] ); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e( 'Bakım sayfasında gösterilecek başlık.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Title to be displayed on the maintenance page.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <label for="devhold_subtitle"><?php esc_html_e( 'Alt Başlık', 'devhold' ); ?></label>
+                            <label for="devhold_subtitle"><?php esc_html_e( 'Subtitle', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <input type="text" name="devhold_options[subtitle]" id="devhold_subtitle" value="<?php echo esc_attr( $options['subtitle'] ); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e( 'Sayfada gösterilecek ana başlık.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Main heading to be displayed on the page.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <label for="devhold_message"><?php esc_html_e( 'Mesaj', 'devhold' ); ?></label>
+                            <label for="devhold_message"><?php esc_html_e( 'Message', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <?php
@@ -127,20 +127,20 @@ $roles = $wp_roles->get_names();
                                 )
                             );
                             ?>
-                            <p class="description"><?php esc_html_e( 'Ziyaretçilere gösterilecek açıklama mesajı.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Description message to be shown to visitors.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                 </table>
             </div>
             
-            <!-- Tasarım Ayarları -->
+            <!-- Design Settings -->
             <div id="design" class="devhold-tab-content">
-                <h3><?php esc_html_e( 'Tasarım Ayarları', 'devhold' ); ?></h3>
+                <h3><?php esc_html_e( 'Design Settings', 'devhold' ); ?></h3>
                 
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="devhold_design_style"><?php esc_html_e( 'Tasarım Stili', 'devhold' ); ?></label>
+                            <label for="devhold_design_style"><?php esc_html_e( 'Design Style', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <div class="devhold-design-options">
@@ -150,7 +150,7 @@ $roles = $wp_roles->get_names();
                                         <div class="preview-minimal">
                                             <div class="preview-header">🔧</div>
                                             <div class="preview-title">Minimal</div>
-                                            <div class="preview-text">Kısa başlık ve açıklama</div>
+                                            <div class="preview-text">Short title and description</div>
                                         </div>
                                     </div>
                                     <span class="design-name"><?php esc_html_e( 'Minimal', 'devhold' ); ?></span>
@@ -161,14 +161,14 @@ $roles = $wp_roles->get_names();
                                     <div class="devhold-design-preview">
                                         <div class="preview-detailed">
                                             <div class="preview-header">🔧</div>
-                                            <div class="preview-title">Genişletilmiş</div>
-                                            <div class="preview-text">Daha geniş alan</div>
+                                            <div class="preview-title">Extended</div>
+                                            <div class="preview-text">More spacious area</div>
                                         </div>
                                     </div>
-                                    <span class="design-name"><?php esc_html_e( 'Genişletilmiş', 'devhold' ); ?></span>
+                                    <span class="design-name"><?php esc_html_e( 'Extended', 'devhold' ); ?></span>
                                 </label>
                             </div>
-                            <p class="description"><?php esc_html_e( 'Bakım sayfası için tasarım stilini seçin.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Choose design style for maintenance page.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                     
@@ -186,104 +186,104 @@ $roles = $wp_roles->get_names();
                                     <?php endif; ?>
                                 </div>
                                 <button type="button" class="button devhold-upload-button" data-target="#devhold_logo_url" data-preview=".devhold-logo-preview">
-                                    <?php esc_html_e( 'Logo Seç', 'devhold' ); ?>
+                                    <?php esc_html_e( 'Select Logo', 'devhold' ); ?>
                                 </button>
                                 <button type="button" class="button devhold-remove-button" data-target="#devhold_logo_url" data-preview=".devhold-logo-preview" <?php echo empty( $options['logo_url'] ) ? 'style="display:none;"' : ''; ?>>
-                                    <?php esc_html_e( 'Kaldır', 'devhold' ); ?>
+                                    <?php esc_html_e( 'Remove', 'devhold' ); ?>
                                 </button>
                             </div>
-                            <p class="description"><?php esc_html_e( 'Bakım sayfasında gösterilecek logo. Boş bırakılırsa varsayılan ikon gösterilir.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Logo to be displayed on maintenance page. Default icon will be shown if left empty.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <label for="devhold_background_color"><?php esc_html_e( 'Arka Plan Rengi', 'devhold' ); ?></label>
+                            <label for="devhold_background_color"><?php esc_html_e( 'Background Color', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <input type="text" name="devhold_options[background_color]" id="devhold_background_color" value="<?php echo esc_attr( $options['background_color'] ); ?>" class="devhold-color-picker">
-                            <p class="description"><?php esc_html_e( 'Gradient arka plan için başlangıç rengi.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Starting color for gradient background.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <label for="devhold_text_color"><?php esc_html_e( 'Metin Rengi', 'devhold' ); ?></label>
+                            <label for="devhold_text_color"><?php esc_html_e( 'Text Color', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <input type="text" name="devhold_options[text_color]" id="devhold_text_color" value="<?php echo esc_attr( $options['text_color'] ); ?>" class="devhold-color-picker">
-                            <p class="description"><?php esc_html_e( 'Başlık ve metin rengi.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Heading and text color.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <label for="devhold_background_image"><?php esc_html_e( 'Arka Plan Görseli', 'devhold' ); ?></label>
+                            <label for="devhold_background_image"><?php esc_html_e( 'Background Image', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <div class="devhold-media-upload">
                                 <input type="hidden" name="devhold_options[background_image]" id="devhold_background_image_url" value="<?php echo esc_attr( $options['background_image'] ); ?>">
                                 <div class="devhold-background-preview">
                                     <?php if ( ! empty( $options['background_image'] ) ) : ?>
-                                        <img src="<?php echo esc_url( $options['background_image'] ); ?>" alt="Arka Plan">
+                                        <img src="<?php echo esc_url( $options['background_image'] ); ?>" alt="Background">
                                     <?php endif; ?>
                                 </div>
                                 <button type="button" class="button devhold-upload-button" data-target="#devhold_background_image_url" data-preview=".devhold-background-preview">
-                                    <?php esc_html_e( 'Arka Plan Seç', 'devhold' ); ?>
+                                    <?php esc_html_e( 'Select Background', 'devhold' ); ?>
                                 </button>
                                 <button type="button" class="button devhold-remove-button" data-target="#devhold_background_image_url" data-preview=".devhold-background-preview" <?php echo empty( $options['background_image'] ) ? 'style="display:none;"' : ''; ?>>
-                                    <?php esc_html_e( 'Kaldır', 'devhold' ); ?>
+                                    <?php esc_html_e( 'Remove', 'devhold' ); ?>
                                 </button>
                             </div>
-                            <p class="description"><?php esc_html_e( 'Arka plan için görsel seçin. Boş bırakılırsa gradient arka plan kullanılır.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Select image for background. Gradient background will be used if left empty.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <label for="devhold_custom_css"><?php esc_html_e( 'Özel CSS', 'devhold' ); ?></label>
+                            <label for="devhold_custom_css"><?php esc_html_e( 'Custom CSS', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <textarea name="devhold_options[custom_css]" id="devhold_custom_css" rows="10" class="large-text code"><?php echo esc_textarea( $options['custom_css'] ); ?></textarea>
-                            <p class="description"><?php esc_html_e( 'Bakım sayfasına eklemek istediğiniz özel CSS kodları.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Custom CSS code to add to the maintenance page.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                 </table>
             </div>
             
-            <!-- Geri Sayım -->
+            <!-- Countdown -->
             <div id="countdown" class="devhold-tab-content">
-                <h3><?php esc_html_e( 'Geri Sayım Ayarları', 'devhold' ); ?></h3>
+                <h3><?php esc_html_e( 'Countdown Settings', 'devhold' ); ?></h3>
                 
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="devhold_countdown_enabled"><?php esc_html_e( 'Geri Sayım', 'devhold' ); ?></label>
+                            <label for="devhold_countdown_enabled"><?php esc_html_e( 'Countdown', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <label class="devhold-switch">
                                 <input type="checkbox" name="devhold_options[countdown_enabled]" id="devhold_countdown_enabled" value="1" <?php checked( ! empty( $options['countdown_enabled'] ) ); ?>>
                                 <span class="devhold-slider"></span>
                             </label>
-                            <p class="description"><?php esc_html_e( 'Geri sayım sayacını göster.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Show countdown timer.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <label for="devhold_countdown_date"><?php esc_html_e( 'Bitiş Tarihi', 'devhold' ); ?></label>
+                            <label for="devhold_countdown_date"><?php esc_html_e( 'End Date', 'devhold' ); ?></label>
                         </th>
                         <td>
                             <input type="datetime-local" name="devhold_options[countdown_date]" id="devhold_countdown_date" value="<?php echo esc_attr( $options['countdown_date'] ); ?>" class="regular-text">
-                            <p class="description"><?php esc_html_e( 'Geri sayımın biteceği tarih ve saat.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Date and time when countdown will end.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                 </table>
             </div>
             
-            <!-- Sosyal Medya -->
+            <!-- Social Media -->
             <div id="social" class="devhold-tab-content">
-                <h3><?php esc_html_e( 'Sosyal Medya Linkleri', 'devhold' ); ?></h3>
+                <h3><?php esc_html_e( 'Social Media Links', 'devhold' ); ?></h3>
                 
                 <div class="devhold-social-links">
                     <div id="devhold-social-container">
@@ -293,7 +293,7 @@ $roles = $wp_roles->get_names();
                                 ?>
                                 <div class="devhold-social-item">
                                     <select name="devhold_options[social_links][<?php echo $index; ?>][platform]" class="devhold-social-platform">
-                                        <option value=""><?php esc_html_e( 'Platform Seçin', 'devhold' ); ?></option>
+                                        <option value=""><?php esc_html_e( 'Select Platform', 'devhold' ); ?></option>
                                         <option value="facebook" <?php selected( $link['platform'], 'facebook' ); ?>>Facebook</option>
                                         <option value="twitter" <?php selected( $link['platform'], 'twitter' ); ?>>Twitter</option>
                                         <option value="instagram" <?php selected( $link['platform'], 'instagram' ); ?>>Instagram</option>
@@ -302,7 +302,7 @@ $roles = $wp_roles->get_names();
                                         <option value="github" <?php selected( $link['platform'], 'github' ); ?>>GitHub</option>
                                     </select>
                                     <input type="url" name="devhold_options[social_links][<?php echo $index; ?>][url]" value="<?php echo esc_url( $link['url'] ); ?>" placeholder="<?php esc_attr_e( 'URL', 'devhold' ); ?>" class="regular-text">
-                                    <button type="button" class="button devhold-remove-social"><?php esc_html_e( 'Kaldır', 'devhold' ); ?></button>
+                                    <button type="button" class="button devhold-remove-social"><?php esc_html_e( 'Remove', 'devhold' ); ?></button>
                                 </div>
                                 <?php
                             }
@@ -310,19 +310,19 @@ $roles = $wp_roles->get_names();
                         ?>
                     </div>
                     <button type="button" class="button button-secondary" id="devhold-add-social">
-                        <?php esc_html_e( 'Sosyal Medya Ekle', 'devhold' ); ?>
+                        <?php esc_html_e( 'Add Social Media', 'devhold' ); ?>
                     </button>
                 </div>
             </div>
             
-            <!-- Erişim Kontrolü -->
+            <!-- Access Control -->
             <div id="access" class="devhold-tab-content">
-                <h3><?php esc_html_e( 'Erişim Kontrolü', 'devhold' ); ?></h3>
+                <h3><?php esc_html_e( 'Access Control', 'devhold' ); ?></h3>
                 
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <?php esc_html_e( 'Bakım Modunu Atlayabilecek Roller', 'devhold' ); ?>
+                            <?php esc_html_e( 'Roles That Can Bypass Maintenance Mode', 'devhold' ); ?>
                         </th>
                         <td>
                             <fieldset>
@@ -333,7 +333,7 @@ $roles = $wp_roles->get_names();
                                     </label><br>
                                 <?php endforeach; ?>
                             </fieldset>
-                            <p class="description"><?php esc_html_e( 'Seçilen rollere sahip kullanıcılar bakım modunu görmeden siteye erişebilir.', 'devhold' ); ?></p>
+                            <p class="description"><?php esc_html_e( 'Users with selected roles can access the site without seeing maintenance mode.', 'devhold' ); ?></p>
                         </td>
                     </tr>
                 </table>
@@ -346,7 +346,7 @@ $roles = $wp_roles->get_names();
     <div class="devhold-footer">
         <p>
             <?php esc_html_e( 'DevHold', 'devhold' ); ?> v<?php echo DEVHOLD_VERSION; ?> | 
-            <?php esc_html_e( 'Geliştirici:', 'devhold' ); ?> <a href="https://enginozturk.tr" target="_blank">Engin ÖZTÜRK & Claude AI</a>
+            <?php esc_html_e( 'Developer:', 'devhold' ); ?> <a href="https://enginozturk.tr" target="_blank">Engin ÖZTÜRK & Claude AI</a>
         </p>
     </div>
 </div>
@@ -602,7 +602,7 @@ input:checked + .devhold-slider:before {
     color: #666;
 }
 
-/* Admin bar stili */
+/* Admin bar style */
 #wpadminbar .devhold-admin-bar-active .ab-icon:before {
     content: "\f308";
     color: #4CAF50;

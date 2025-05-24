@@ -7,11 +7,11 @@
     <meta name="robots" content="noindex, nofollow">
     
     <?php
-    // Varsayılan değerleri ekle (eğer yoksa)
+    // Add default values (if not exists)
     $default_options = array(
         'enabled' => false,
-        'title' => __( 'Geliştirme Aşamasında', 'devhold' ),
-        'message' => __( 'Sitemiz şu anda geliştirme aşamasındadır. Lütfen daha sonra tekrar ziyaret ediniz.', 'devhold' ),
+        'title' => __( 'Under Development', 'devhold' ),
+        'message' => __( 'Our site is currently under development. Please visit again later.', 'devhold' ),
         'countdown_enabled' => false,
         'countdown_date' => '',
         'social_links' => array(),
@@ -22,13 +22,13 @@
         'bypass_roles' => array( 'administrator' ),
         'design_style' => 'minimal',
         'background_image' => '',
-        'subtitle' => __( 'Geliştirme Aşamasında', 'devhold' )
+        'subtitle' => __( 'Under Development', 'devhold' )
     );
     
-    // Eksik değerleri varsayılanlarla doldur
+    // Fill missing values with defaults
     $this->options = wp_parse_args( $this->options, $default_options );
     
-    // Cognify temasının fontlarını kullanalım
+    // Use Cognify theme fonts
     ?>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -79,7 +79,7 @@
         }
         <?php endif; ?>
         
-        /* Arka plan animasyonu */
+        /* Background animation */
         body::before {
             content: '';
             position: absolute;
@@ -331,19 +331,19 @@
         <div class="countdown-container" id="countdown">
             <div class="countdown-item">
                 <span class="countdown-number" id="days">0</span>
-                <span class="countdown-label"><?php esc_html_e( 'Gün', 'devhold' ); ?></span>
+                <span class="countdown-label"><?php esc_html_e( 'Days', 'devhold' ); ?></span>
             </div>
             <div class="countdown-item">
                 <span class="countdown-number" id="hours">0</span>
-                <span class="countdown-label"><?php esc_html_e( 'Saat', 'devhold' ); ?></span>
+                <span class="countdown-label"><?php esc_html_e( 'Hours', 'devhold' ); ?></span>
             </div>
             <div class="countdown-item">
                 <span class="countdown-number" id="minutes">0</span>
-                <span class="countdown-label"><?php esc_html_e( 'Dakika', 'devhold' ); ?></span>
+                <span class="countdown-label"><?php esc_html_e( 'Minutes', 'devhold' ); ?></span>
             </div>
             <div class="countdown-item">
                 <span class="countdown-number" id="seconds">0</span>
-                <span class="countdown-label"><?php esc_html_e( 'Saniye', 'devhold' ); ?></span>
+                <span class="countdown-label"><?php esc_html_e( 'Seconds', 'devhold' ); ?></span>
             </div>
         </div>
         <?php endif; ?>
@@ -386,12 +386,12 @@
     </div>
     
     <div class="developer-credit">
-        <?php esc_html_e( 'Geliştirici:', 'devhold' ); ?> <a href="https://enginozturk.tr" target="_blank">Engin ÖZTÜRK & Claude AI</a>
+        <?php esc_html_e( 'Developer:', 'devhold' ); ?> <a href="https://enginozturk.tr" target="_blank">Engin ÖZTÜRK & Claude AI</a>
     </div>
     
     <?php if ( ! empty( $this->options['countdown_enabled'] ) && ! empty( $this->options['countdown_date'] ) ) : ?>
     <script>
-        // Geri sayım
+        // Countdown
         const countdownDate = new Date("<?php echo esc_js( $this->options['countdown_date'] ); ?>").getTime();
         
         const countdown = setInterval(function() {
@@ -400,7 +400,7 @@
             
             if (distance < 0) {
                 clearInterval(countdown);
-                document.getElementById("countdown").innerHTML = "<p><?php esc_html_e( 'Süre doldu!', 'devhold' ); ?></p>";
+                document.getElementById("countdown").innerHTML = "<p><?php esc_html_e( 'Time expired!', 'devhold' ); ?></p>";
                 return;
             }
             
